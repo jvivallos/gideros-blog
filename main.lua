@@ -5,9 +5,28 @@ local contentWidth = application:getContentWidth()
 local contentHeight = application:getContentHeight()
 
 local texturepack = TexturePack.new("texturepacks/pack.txt", "texturepacks/pack.png", true)
-local heroe = Bitmap.new(texturepack:getTextureRegion("heroe_1.png"))
+
+local frames = {}
+
+for i = 1, 6 do
+  local bitmap = Bitmap.new(texturepack:getTextureRegion("heroe_"..i..".png"))
+  bitmap:setAnchorPoint(0.5, 0.5)
+  frames[i] = bitmap
+end
+
+local heroe = MovieClip.new{
+  {1, 10, frames[1]},
+  {11, 21, frames[2]},
+  {22, 32, frames[3]},
+  {33, 33, frames[4]},
+  {34, 44, frames[5]},
+  {45, 55, frames[6]},
+}
+
+heroe:setGotoAction(55, 1)
+heroe:gotoAndPlay(1)
+
 heroe:setPosition(contentWidth / 2, contentHeight - 40)
-heroe:setAnchorPoint(0.5, 0.5)
 
 function onMouseDown(event)
    heroe:setPosition(event.x, contentHeight - 40)
